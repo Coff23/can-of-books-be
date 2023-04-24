@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 require('dotenv').config();
-mongoose.connect(preocess.env.DB_URL);
+mongoose.connect(process.env.DB_URL);
 
 const Book = require('./models/books');
 
@@ -16,7 +16,7 @@ async function seed() {
 
     console.log('moby dick was created');
 
-    await Book.create() ({
+    await Book.create({
         title: 'Atomic Habits',
         description: 'About fixing habits',
         status: true
@@ -24,7 +24,7 @@ async function seed() {
 
     console.log('atomic habits was created');
 
-    await Book.create() ({
+    await Book.create({
         title: 'Harry Potter',
         description: 'You are a wizard',
         status: true
