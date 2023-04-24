@@ -42,6 +42,6 @@ app.get('*', (req, res) => {
 });
 
 app.use((error, req, res, next) => {
-  console.log('error.message');
+  console.log(error.message);
   res.status(500).send(error.message);
 });
