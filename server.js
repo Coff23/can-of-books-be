@@ -11,6 +11,8 @@ const Book = require('./models/books');
 const app = express();
 app.use(cors());
 
+app.use(express.json());
+
 const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
@@ -36,6 +38,37 @@ app.get('/books', async (req, res, next) => {
     next(error);
   }
 });
+
+app.post('/books', postBook);
+
+async function postBook(req, res, next) {
+  try {
+    console.log(req.body);
+    let bookData = req.body;
+
+    let createdBook = await Book.create(bookData);
+
+    res.status(200).send(createdBook);
+  } catch (error) {
+    next(error);
+  }
+}
+
+app.delete('/books/:bookID', deleteBook);
+
+async function deleteBook(req, res, next) {
+  try {
+    console.log(req.params);
+
+    let id = req.params.bookID;
+
+    await Book.findByIdAndDelete(id);
+
+    res.status(200).send('Book Deleted!');
+  } catch (error) {
+    next(error);
+  }
+}
 
 app.get('*', (req, res) => {
   res.status(404).send('Not Available');
