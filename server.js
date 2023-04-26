@@ -70,6 +70,21 @@ async function deleteBook(req, res, next) {
   }
 }
 
+app.put('/books/:bookID', updateBook);
+
+async function updateBook(req, res, next) {
+  try {
+    let id = req.params.bookID;
+    let bookData = req.body;
+
+    let updatedBook = await Book.findByIdAndUpdate(id, bookData, { new: true, overwrite: true });
+
+    res.status(200).send(updatedBook);
+  } catch (error) {
+    next(error);
+  }
+}
+
 app.get('*', (req, res) => {
   res.status(404).send('Not Available');
 });
